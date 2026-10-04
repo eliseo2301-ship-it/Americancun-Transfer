@@ -121,3 +121,19 @@ export async function dispatchUpcomingAlarms(): Promise<{
     results,
   };
 }
+
+// In-process scheduler for Render Free Tier (runs automatically without paid background worker)
+declare global {
+  // eslint-disable-next-line no-var
+  var alarmSchedulerRunning: boolean | undefined;
+}
+
+if (!globalThis.alarmSchedulerRunning && typeof window === 'undefined') {
+  globalThis.alarmSchedulerRunning = true;
+  // Scan every 5 minutes inside the Node.js web process
+  setInterval(() => {
+    dispatchUpcomingAlarms().catch((err) => {
+      console.warn('[In-Process Alarm Worker]', err?.message || err);
+    });
+  }, 5 * 60 * 1000);
+}

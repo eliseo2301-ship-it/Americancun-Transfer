@@ -1,9 +1,9 @@
 services:
-  # Next.js Web Application & API Service
+  # Servicio Web Único 100% Gratuito en Render (Free Tier)
   - type: web
-    name: americancun-web
+    name: americancun-transfer
     runtime: node
-    plan: starter
+    plan: free
     region: oregon
     branch: main
     buildCommand: npm install && npx prisma generate && npm run build
@@ -11,10 +11,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: americancun-db
-          property: connectionString
       - key: NEXT_PUBLIC_APP_URL
         value: https://americancun-transfer.onrender.com
       - key: NEXT_PUBLIC_BANK_NAME
@@ -26,56 +22,4 @@ services:
       - key: NEXT_PUBLIC_SUPPORT_WHATSAPP
         value: "+529981234567"
       - key: WORKER_SECRET_KEY
-        generateValue: true
-      - key: META_WA_PHONE_NUMBER_ID
-        sync: false
-      - key: META_WA_ACCESS_TOKEN
-        sync: false
-      - key: TWILIO_ACCOUNT_SID
-        sync: false
-      - key: TWILIO_AUTH_TOKEN
-        sync: false
-      - key: TWILIO_WHATSAPP_NUMBER
-        sync: false
-
-  # Background Worker: 60-Minute WhatsApp Pre-Trip Alarms & Dispatch Worker
-  - type: worker
-    name: americancun-alarm-worker
-    runtime: node
-    plan: starter
-    region: oregon
-    branch: main
-    buildCommand: npm install && npx prisma generate
-    startCommand: npm run worker
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: americancun-db
-          property: connectionString
-      - key: NEXT_PUBLIC_SUPPORT_WHATSAPP
-        value: "+529981234567"
-      - key: WORKER_SECRET_KEY
-        fromService:
-          name: americancun-web
-          type: web
-          envVarKey: WORKER_SECRET_KEY
-      - key: META_WA_PHONE_NUMBER_ID
-        sync: false
-      - key: META_WA_ACCESS_TOKEN
-        sync: false
-      - key: TWILIO_ACCOUNT_SID
-        sync: false
-      - key: TWILIO_AUTH_TOKEN
-        sync: false
-      - key: TWILIO_WHATSAPP_NUMBER
-        sync: false
-
-databases:
-  # Managed PostgreSQL Instance
-  - name: americancun-db
-    databaseName: americancun
-    user: americancun_admin
-    plan: starter
-    region: oregon
+        value: americancun_free_token_2026
