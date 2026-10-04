@@ -1,0 +1,81 @@
+services:
+  # Next.js Web Application & API Service
+  - type: web
+    name: americancun-web
+    runtime: node
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: americancun-db
+          property: connectionString
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://americancun-transfer.onrender.com
+      - key: NEXT_PUBLIC_BANK_NAME
+        value: BBVA México
+      - key: NEXT_PUBLIC_BANK_BENEFICIARY
+        value: Americancun Transfer S.A. de C.V.
+      - key: NEXT_PUBLIC_BANK_CLABE
+        value: "012691001234567890"
+      - key: NEXT_PUBLIC_SUPPORT_WHATSAPP
+        value: "+529981234567"
+      - key: WORKER_SECRET_KEY
+        generateValue: true
+      - key: META_WA_PHONE_NUMBER_ID
+        sync: false
+      - key: META_WA_ACCESS_TOKEN
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_NUMBER
+        sync: false
+
+  # Background Worker: 60-Minute WhatsApp Pre-Trip Alarms & Dispatch Worker
+  - type: worker
+    name: americancun-alarm-worker
+    runtime: node
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm run worker
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: americancun-db
+          property: connectionString
+      - key: NEXT_PUBLIC_SUPPORT_WHATSAPP
+        value: "+529981234567"
+      - key: WORKER_SECRET_KEY
+        fromService:
+          name: americancun-web
+          type: web
+          envVarKey: WORKER_SECRET_KEY
+      - key: META_WA_PHONE_NUMBER_ID
+        sync: false
+      - key: META_WA_ACCESS_TOKEN
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_NUMBER
+        sync: false
+
+databases:
+  # Managed PostgreSQL Instance
+  - name: americancun-db
+    databaseName: americancun
+    user: americancun_admin
+    plan: starter
+    region: oregon

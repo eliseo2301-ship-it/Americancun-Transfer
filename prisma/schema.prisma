@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  phone     String    // WhatsApp phone with country code e.g. +52998...
+  language  String    @default("es") // "es" | "en"
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+
+  @@index([email])
+  @@index([phone])
+}
+
+enum ServiceType {
+  AIRPORT_HOTEL
+  HOTEL_HOTEL
+  TOUR
+}
+
+enum VehicleCategory {
+  PER_PERSON
+  GROUP_VAN       // Up to 8 or 16 passengers
+  VIP_SUBURBAN    // Suburban / Escalade luxury tier
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  DISPATCHED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER   // SPEI automated voucher
+  CASH            // Cash on arrival (USD / MXN)
+}
+
+enum PaymentStatus {
+  PENDING
+  VERIFIED
+  PAID
+}
+
+model Booking {
+  id              String          @id @default(cuid())
+  bookingCode     String          @unique // e.g. ACT-2026-9812
+  serviceType     ServiceType     @default(AIRPORT_HOTEL)
+  origin          String
+  destination     String
+  dateTime        DateTime        // Pickup time
+  returnDateTime  DateTime?       // Optional return for round trips
+  isRoundTrip     Boolean         @default(false)
+  passengers      Int             @default(1)
+  category        VehicleCategory @default(GROUP_VAN)
+  status          BookingStatus   @default(PENDING)
+  
+  // Pricing & Payment
+  totalAmount     Float
+  currency        String          @default("USD") // "USD" or "MXN"
+  paymentMethod   PaymentMethod   @default(BANK_TRANSFER)
+  paymentStatus   PaymentStatus   @default(PENDING)
+  speiClabe       String?
+  speiConcept     String?         // Unique alphanumeric concept for SPEI tracking
+  
+  // Logistics & Transfer specifics
+  flightNumber    String?
+  terminal        String?         // Terminal 2, 3, or 4 at CUN
+  hotelName       String?
+  notes           String?
+  
+  // Dispatch & 60-Minute Alarm Alert
+  assignedVehicle String?         // e.g. "Van VIP Económico #42"
+  driverName      String?         // e.g. "Carlos Méndez"
+  driverPhone     String?         // e.g. "+52 998 555 1234"
+  alarmSent       Boolean         @default(false)
+  alarmSentAt     DateTime?
+
+  // Relations
+  customerId      String
+  customer        Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([bookingCode])
+  @@index([dateTime, status, alarmSent])
+}
+
+model Destination {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  region            String   // "quintana_roo", "yucatan", "parques"
+  tagline           String
+  description       String
+  estimatedDuration String   // e.g. "45 min" or "2.5 horas"
+  distanceKm        Float
+  pricePerPersonUsd Float
+  priceGroupVanUsd  Float
+  priceVipUsd       Float
+  popular           Boolean  @default(false)
+  imageUrl          String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model PricingRule {
+  id                      String          @id @default(cuid())
+  originZone              String          // e.g. "CUN_AIRPORT"
+  destinationZone         String          // e.g. "CANCUN_HOTEL_ZONE", "PLAYA_DEL_CARMEN", "TULUM"
+  pricePerPersonUsd       Float
+  priceGroupVan8PaxUsd    Float
+  priceGroupVan16PaxUsd   Float
+  priceVipSuburbanUsd     Float
+  roundTripDiscountPct    Float           @default(10.0) // 10% discount on return
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  @@unique([originZone, destinationZone])
+}
