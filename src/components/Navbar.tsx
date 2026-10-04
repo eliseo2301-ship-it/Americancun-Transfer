@@ -149,7 +149,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 title="Abrir Chatbot de Cotización"
               >
                 <Sparkles className="w-3.5 h-3.5 text-gold-400" />
-                <span>Chatbot Bot</span>
+                <span>{t.bot}</span>
               </button>
             )}
           </div>

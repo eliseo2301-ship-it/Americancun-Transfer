@@ -11,7 +11,7 @@ export const TRANSLATIONS = {
       about: 'Nosotros',
       faq: 'Terminales CUN & FAQ',
       whatsapp: 'WhatsApp 24/7',
-      bot: 'Chatbot Bot',
+      bot: 'Capi Ameri VIP',
       facebook: 'Facebook',
     },
     hero: {
@@ -121,7 +121,7 @@ export const TRANSLATIONS = {
       about: 'About Us',
       faq: 'CUN Terminals & FAQ',
       whatsapp: 'WhatsApp 24/7',
-      bot: 'Chatbot Bot',
+      bot: 'Capi Ameri VIP',
       facebook: 'Facebook',
     },
     hero: {

@@ -11,6 +11,7 @@ import { FaqSection } from '@/components/FaqSection';
 import { Footer } from '@/components/Footer';
 import { CheckoutModal } from '@/components/CheckoutModal';
 import { ChatbotWidget } from '@/components/ChatbotWidget';
+import { ChichenItzaBackground } from '@/components/ChichenItzaBackground';
 import { calculateQuote } from '@/lib/pricing';
 import { VehicleCategory } from '@/types';
 import { Language } from '@/lib/translations';
@@ -81,6 +82,9 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-navy-950 text-white relative">
+      {/* Interactive Chichén Itzá Pyramid Background & Mayan Equinox Particles */}
+      <ChichenItzaBackground />
+
       {/* Top Navbar */}
       <Navbar
         currency={currency}
@@ -139,9 +143,10 @@ export default function HomePage() {
         currency={currency}
       />
 
-      {/* Interactive Chatbot Widget */}
+      {/* Interactive Virtual Assistant (Capi Ameri) with Animated Van / Jet */}
       <ChatbotWidget
         currency={currency}
+        language={language}
         onBookNow={handleOpenBooking}
         isOpen={isBotOpen}
         onToggle={() => setIsBotOpen(!isBotOpen)}
