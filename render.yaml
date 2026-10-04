@@ -20,6 +20,6 @@ services:
       - key: NEXT_PUBLIC_BANK_CLABE
         value: "012691001234567890"
       - key: NEXT_PUBLIC_SUPPORT_WHATSAPP
-        value: "+529981234567"
+        value: "+529987687600"
       - key: WORKER_SECRET_KEY
         value: americancun_free_token_2026

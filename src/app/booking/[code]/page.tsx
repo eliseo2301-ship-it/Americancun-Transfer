@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { 
   CheckCircle2, 
@@ -90,7 +91,7 @@ export default function BookingDetailPage() {
   }
 
   const pickupDate = new Date(booking.dateTime);
-  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+529981234567';
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return (
     <div className="min-h-screen bg-navy-950 text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -121,8 +122,14 @@ export default function BookingDetailPage() {
           {/* Header Banner */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 border-b border-gold-500/25 gap-4">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-navy-950 font-bold shadow-lg shadow-gold-500/25">
-                <Compass className="w-6 h-6" />
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-gold-500/40 bg-black flex items-center justify-center shadow-lg shadow-gold-500/25">
+                <Image
+                  src="/logo.png"
+                  alt="Americancun Transfer"
+                  fill
+                  sizes="56px"
+                  className="object-contain p-1"
+                />
               </div>
               <div>
                 <span className="font-serif tracking-widest text-xl font-extrabold uppercase">

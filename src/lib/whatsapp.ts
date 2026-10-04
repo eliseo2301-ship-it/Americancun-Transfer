@@ -15,7 +15,7 @@ export interface WhatsAppMessagePayload {
 }
 
 export function formatWhatsAppAlarmText(data: WhatsAppMessagePayload): string {
-  const supportPhone = data.supportPhone || process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 123 4567';
+  const supportPhone = data.supportPhone || process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return `🌴 *AMERICANCUN TRANSFER - RECORDATORIO DE TRASLADO (EN 60 MINUTOS)* 🌴
 

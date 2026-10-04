@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Compass, ShieldCheck, Phone, Mail, MapPin, MessageSquare, CreditCard, Clock } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+529981234567';
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return (
     <footer className="bg-navy-950 border-t border-gold-500/20 text-gray-400 text-xs">
@@ -16,8 +17,14 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-700 flex items-center justify-center text-navy-950 font-bold shadow-lg shadow-gold-500/20">
-                <Compass className="w-5 h-5" />
+              <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-gold-500/30 bg-black flex items-center justify-center shadow-lg shadow-gold-500/20">
+                <Image
+                  src="/logo.png"
+                  alt="Americancun Transfer"
+                  fill
+                  sizes="48px"
+                  className="object-contain p-1"
+                />
               </div>
               <span className="font-serif tracking-widest text-lg font-bold text-white uppercase">
                 Americancun <span className="text-gold-400">Transfer</span>

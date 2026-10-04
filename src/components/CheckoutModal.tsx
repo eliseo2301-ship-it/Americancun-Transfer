@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { 
   X, 
   ShieldCheck, 
@@ -106,7 +107,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
   };
 
-  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+529981234567';
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-navy-950/80 backdrop-blur-md flex items-center justify-center p-4">
@@ -115,8 +116,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Modal Header */}
         <div className="p-6 bg-navy-950/90 border-b border-gold-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gold-500/20 border border-gold-500/40 text-gold-400 flex items-center justify-center">
-              <Car className="w-5 h-5" />
+            <div className="relative w-11 h-11 rounded-xl overflow-hidden border border-gold-500/40 bg-black flex items-center justify-center shrink-0 shadow-lg shadow-gold-500/20">
+              <Image
+                src="/logo.png"
+                alt="Americancun Transfer Logo"
+                fill
+                sizes="44px"
+                className="object-contain p-1"
+              />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white">

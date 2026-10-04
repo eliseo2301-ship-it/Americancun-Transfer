@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Compass, ShieldCheck, Phone, MessageSquare, Menu, X, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
@@ -12,7 +13,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOpenBot }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+529981234567';
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-gold-500/20 bg-navy-950/85">
@@ -21,8 +22,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-gold-400 to-gold-700 flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform duration-300">
-              <Compass className="w-6 h-6 text-navy-950" />
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-gold-500/30 bg-black flex items-center justify-center shadow-lg shadow-gold-500/15 group-hover:scale-105 transition-transform duration-300">
+              <Image
+                src="/logo.png"
+                alt="Americancun Transfer Logo"
+                fill
+                sizes="48px"
+                className="object-contain p-1"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-serif tracking-widest text-lg font-bold text-white uppercase flex items-center gap-1.5">
