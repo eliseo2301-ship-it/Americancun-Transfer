@@ -19,7 +19,8 @@ import {
   Compass, 
   ShieldCheck, 
   AlertCircle,
-  ArrowLeft
+  ArrowLeft,
+  Facebook
 } from 'lucide-react';
 import { formatPrice } from '@/lib/pricing';
 
@@ -346,7 +347,17 @@ export default function BookingDetailPage() {
               </span>
             </div>
 
-            <div className="flex gap-3 no-print">
+            <div className="flex flex-wrap gap-3 no-print">
+              <a
+                href="https://www.facebook.com/AMER1CANCUN/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow"
+              >
+                <Facebook className="w-4 h-4" />
+                <span>Facebook Oficial</span>
+              </a>
+
               <a
                 href={`https://wa.me/${supportPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hola, tengo una duda sobre mi reserva #${booking.bookingCode}.`)}`}
                 target="_blank"

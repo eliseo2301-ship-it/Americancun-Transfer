@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Compass, ShieldCheck, Phone, Mail, MapPin, MessageSquare, CreditCard, Clock } from 'lucide-react';
+import { Compass, ShieldCheck, Phone, Mail, MapPin, MessageSquare, CreditCard, Clock, Facebook } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
@@ -45,6 +45,18 @@ export const Footer: React.FC = () => {
                 Puntualidad 100%
               </span>
             </div>
+
+            <div className="pt-2">
+              <a
+                href="https://www.facebook.com/AMER1CANCUN/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 text-xs font-semibold transition-all shadow"
+              >
+                <Facebook className="w-3.5 h-3.5" />
+                <span>Síguenos en Facebook Oficial</span>
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -85,6 +97,16 @@ export const Footer: React.FC = () => {
               >
                 <MessageSquare className="w-4 h-4 shrink-0" />
                 <span>WhatsApp: {supportPhone}</span>
+              </a>
+
+              <a
+                href="https://www.facebook.com/AMER1CANCUN/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                <Facebook className="w-4 h-4 shrink-0" />
+                <span>Facebook: /AMER1CANCUN</span>
               </a>
 
               <div className="flex items-center gap-2 text-gray-300">

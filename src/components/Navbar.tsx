@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Compass, ShieldCheck, Phone, MessageSquare, Menu, X, Sparkles } from 'lucide-react';
+import { Compass, ShieldCheck, Phone, MessageSquare, Menu, X, Sparkles, Facebook } from 'lucide-react';
 
 interface NavbarProps {
   currency: 'USD' | 'MXN';
@@ -92,6 +92,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
               <span>WhatsApp 24/7</span>
             </a>
 
+            {/* Facebook Link */}
+            <a
+              href="https://www.facebook.com/AMER1CANCUN/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook Oficial Americancun Transfer"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-navy-900 border border-blue-500/40 text-blue-400 hover:text-white hover:bg-blue-600 transition-all text-xs shadow"
+              title="Facebook Oficial Americancun Transfer"
+            >
+              <Facebook className="w-3.5 h-3.5" />
+              <span>Facebook</span>
+            </a>
+
             {/* AI Assistant Quick Trigger */}
             {onOpenBot && (
               <button
@@ -168,15 +181,24 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
           >
             Puntos de Encuentro CUN & FAQ
           </a>
-          <div className="pt-2 border-t border-gray-800 flex gap-2">
+          <div className="pt-2 border-t border-gray-800 flex flex-col gap-2">
             <a
               href={`https://wa.me/${supportPhone.replace(/[^0-9]/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 text-center py-2.5 rounded-lg bg-emerald-600 text-white font-medium text-sm flex items-center justify-center gap-2"
+              className="w-full text-center py-2.5 rounded-lg bg-emerald-600 text-white font-medium text-sm flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4" />
-              WhatsApp Oficial
+              WhatsApp Oficial ({supportPhone})
+            </a>
+            <a
+              href="https://www.facebook.com/AMER1CANCUN/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full text-center py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm flex items-center justify-center gap-2"
+            >
+              <Facebook className="w-4 h-4" />
+              Facebook Oficial (/AMER1CANCUN)
             </a>
           </div>
         </div>
