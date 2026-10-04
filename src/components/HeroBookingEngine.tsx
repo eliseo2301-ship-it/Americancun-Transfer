@@ -18,13 +18,16 @@ import {
 import { ServiceType, VehicleCategory } from '@/types';
 import { DESTINATIONS_DATA, AIRPORT_ORIGINS, HOTEL_HOTEL_ZONES } from '@/lib/destinations-data';
 import { calculateQuote, CATEGORY_DETAILS, formatPrice } from '@/lib/pricing';
+import { Language, TRANSLATIONS } from '@/lib/translations';
 
 interface HeroBookingEngineProps {
   currency: 'USD' | 'MXN';
+  language: Language;
   onBookNow: (bookingDetails: any) => void;
 }
 
-export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, onBookNow }) => {
+export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, language, onBookNow }) => {
+  const t = TRANSLATIONS[language].hero;
   const [serviceType, setServiceType] = useState<ServiceType>('AIRPORT_HOTEL');
   const [origin, setOrigin] = useState<string>('CUN_GEN');
   const [destinationSlug, setDestinationSlug] = useState<string>('cancun-zona-hotelera');
@@ -89,15 +92,15 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
         <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Cancún • Riviera Maya • Yucatán • Parques</span>
+            <span>{t.badge}</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-white tracking-tight leading-tight">
-            Traslados Privados de <span className="gold-gradient-text">Clase Mundial</span>
+            {t.title1} <span className="gold-gradient-text">{t.titleHighlight}</span>
           </h1>
 
           <p className="mt-4 text-base sm:text-lg text-gray-300">
-            Cotizaciones instantáneas, tarifas más competitivas del mercado, checkout automatizado vía SPEI o Efectivo y asistencia bilingüe con alertas 60 minutos antes a tu WhatsApp.
+            {t.subtitle}
           </p>
         </div>
 
@@ -115,7 +118,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
               }`}
             >
               <Plane className="w-4 h-4" />
-              <span>Aeropuerto - Hotel</span>
+              <span>{t.tabAirport}</span>
             </button>
 
             <button
@@ -127,7 +130,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
               }`}
             >
               <Building2 className="w-4 h-4" />
-              <span>Hotel - Hotel</span>
+              <span>{t.tabHotel}</span>
             </button>
 
             <button
@@ -139,7 +142,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
               }`}
             >
               <MapPin className="w-4 h-4" />
-              <span>Tours Privados y Grupales</span>
+              <span>{t.tabTour}</span>
             </button>
           </div>
 
@@ -149,7 +152,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             {/* Origin */}
             <div className="bg-navy-900/90 border border-gold-500/25 rounded-2xl p-3.5 focus-within:border-gold-400 transition-colors">
               <label className="text-[11px] font-medium uppercase tracking-wider text-gold-400 block mb-1">
-                Punto de Partida
+                {t.originLabel}
               </label>
               {serviceType === 'AIRPORT_HOTEL' ? (
                 <select
@@ -191,7 +194,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             {/* Destination */}
             <div className="bg-navy-900/90 border border-gold-500/25 rounded-2xl p-3.5 focus-within:border-gold-400 transition-colors">
               <label className="text-[11px] font-medium uppercase tracking-wider text-gold-400 block mb-1">
-                Destino o Tour
+                {t.destLabel}
               </label>
               <select
                 value={destinationSlug}
@@ -226,7 +229,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             {/* Date & Time */}
             <div className="bg-navy-900/90 border border-gold-500/25 rounded-2xl p-3.5 focus-within:border-gold-400 transition-colors">
               <label className="text-[11px] font-medium uppercase tracking-wider text-gold-400 block mb-1">
-                Fecha & Hora de Ida
+                {t.dateTimeLabel}
               </label>
               <input
                 type="datetime-local"
@@ -241,7 +244,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             <div className="bg-navy-900/90 border border-gold-500/25 rounded-2xl p-3.5 focus-within:border-gold-400 transition-colors flex items-center justify-between">
               <div>
                 <label className="text-[11px] font-medium uppercase tracking-wider text-gold-400 block mb-1">
-                  Pasajeros
+                  {t.passengersLabel}
                 </label>
                 <div className="flex items-center gap-3">
                   <button
@@ -266,7 +269,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
 
               {/* Round Trip Toggle */}
               <div className="text-right">
-                <span className="text-[10px] text-gray-400 block mb-1">¿Viaje Redondo?</span>
+                <span className="text-[10px] text-gray-400 block mb-1">{t.roundTripToggle}</span>
                 <button
                   type="button"
                   onClick={() => setIsRoundTrip(!isRoundTrip)}
@@ -277,7 +280,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                   }`}
                 >
                   <ArrowRightLeft className="w-3 h-3" />
-                  {isRoundTrip ? 'Sí (10% OFF)' : 'Solo Ida'}
+                  {isRoundTrip ? t.roundTripYes : t.roundTripNo}
                 </button>
               </div>
             </div>
@@ -288,7 +291,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             <div className="mb-6 p-4 rounded-2xl bg-gold-500/5 border border-gold-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-xs text-gold-300">
                 <Calendar className="w-4 h-4 text-gold-400" />
-                <span>Fecha y Hora de Regreso (Recogida para volver al aeropuerto u origen):</span>
+                <span>{t.returnDateTimeLabel}</span>
               </div>
               <input
                 type="datetime-local"
@@ -304,11 +307,11 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
           <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-semibold uppercase tracking-wider text-gray-300">
-                Selecciona tu Categoría de Vehículo:
+                {t.selectCategory}
               </span>
               <span className="text-xs text-gold-400 font-medium flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                Tarifa congelada garantizada
+                {t.frozenRate}
               </span>
             </div>
 
@@ -325,7 +328,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
               >
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs font-bold text-white uppercase tracking-wider">
-                    Por Persona
+                    {t.catPerPerson}
                   </span>
                   {category === 'PER_PERSON' && (
                     <div className="w-5 h-5 rounded-full bg-gold-400 text-navy-950 flex items-center justify-center">
@@ -337,7 +340,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                   {formatPrice(selectedDestination.pricePerPersonUsd * (currency === 'MXN' ? 18.5 : 1), currency)}
                   <span className="text-xs font-normal text-gray-400 ml-1">/ pax</span>
                 </div>
-                <p className="text-xs text-gray-300">Servicio compartido en van con salidas continuas.</p>
+                <p className="text-xs text-gray-300">{t.catPerPersonDesc}</p>
               </div>
 
               {/* Option 2: Group Van (Most Popular) */}
@@ -350,11 +353,11 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                 }`}
               >
                 <div className="absolute -top-3 right-4 px-2 py-0.5 rounded-full bg-gradient-to-r from-gold-400 to-gold-600 text-navy-950 font-bold text-[9px] uppercase tracking-wider">
-                  Más Popular
+                  {t.mostPopular}
                 </div>
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs font-bold text-white uppercase tracking-wider">
-                    Van Privada Exclusiva
+                    {t.catGroupVan}
                   </span>
                   {category === 'GROUP_VAN' && (
                     <div className="w-5 h-5 rounded-full bg-gold-400 text-navy-950 flex items-center justify-center">
@@ -364,9 +367,9 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                 </div>
                 <div className="text-xl font-extrabold text-gold-300 mb-1">
                   {formatPrice(selectedDestination.priceGroupVanUsd * (currency === 'MXN' ? 18.5 : 1), currency)}
-                  <span className="text-xs font-normal text-gray-400 ml-1">/ unidad</span>
+                  <span className="text-xs font-normal text-gray-400 ml-1">/ {language === 'en' ? 'unit' : 'unidad'}</span>
                 </div>
-                <p className="text-xs text-gray-300">Hasta 8 o 16 pax. 100% privado y directo a tu hotel.</p>
+                <p className="text-xs text-gray-300">{t.catGroupVanDesc}</p>
               </div>
 
               {/* Option 3: VIP Suburban */}
@@ -381,7 +384,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-gold-400" />
-                    VIP Platinum
+                    {t.catVip}
                   </span>
                   {category === 'VIP_SUBURBAN' && (
                     <div className="w-5 h-5 rounded-full bg-gold-400 text-navy-950 flex items-center justify-center">
@@ -391,9 +394,9 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                 </div>
                 <div className="text-xl font-extrabold text-gold-300 mb-1">
                   {formatPrice(selectedDestination.priceVipUsd * (currency === 'MXN' ? 18.5 : 1), currency)}
-                  <span className="text-xs font-normal text-gray-400 ml-1">/ unidad</span>
+                  <span className="text-xs font-normal text-gray-400 ml-1">/ {language === 'en' ? 'unit' : 'unidad'}</span>
                 </div>
-                <p className="text-xs text-gray-300">Chevrolet Suburban con amenidades y bebidas de lujo.</p>
+                <p className="text-xs text-gray-300">{t.catVipDesc}</p>
               </div>
 
             </div>
@@ -404,10 +407,10 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
             
             <div className="flex flex-col space-y-1 w-full md:w-auto">
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-wider text-gray-400 font-semibold">Total a pagar:</span>
+                <span className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{t.totalToPay}</span>
                 {quote.roundTripDiscount > 0 && (
                   <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-medium">
-                    Ahorras {formatPrice(quote.roundTripDiscount, currency)} en viaje redondo
+                    {t.roundTripSavings}: {formatPrice(quote.roundTripDiscount, currency)}
                   </span>
                 )}
               </div>
@@ -424,7 +427,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
               {/* Best Price Guarantee comparison banner */}
               <div className="flex items-center gap-1.5 text-xs text-emerald-400">
                 <ShieldCheck className="w-4 h-4 shrink-0" />
-                <span>Garantía de Mejor Precio: Ahorras {formatPrice(quote.bestPriceGuaranteeSavings, currency)} vs. tarifas de mostrador de aeropuerto.</span>
+                <span>{language === 'en' ? `Best Price Guarantee: Save ${formatPrice(quote.bestPriceGuaranteeSavings, currency)} vs. airport kiosk rates.` : `Garantía de Mejor Precio: Ahorras ${formatPrice(quote.bestPriceGuaranteeSavings, currency)} vs. tarifas de mostrador de aeropuerto.`}</span>
               </div>
             </div>
 
@@ -434,7 +437,7 @@ export const HeroBookingEngine: React.FC<HeroBookingEngineProps> = ({ currency, 
                 onClick={handleStartBooking}
                 className="px-8 py-4 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-bold text-sm tracking-wider uppercase shadow-xl shadow-gold-500/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
               >
-                <span>Reservar Ahora</span>
+                <span>{t.bookNow}</span>
                 <Car className="w-4 h-4" />
               </button>
             </div>

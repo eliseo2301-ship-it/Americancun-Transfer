@@ -1,19 +1,27 @@
-'use client';
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Compass, ShieldCheck, Phone, MessageSquare, Menu, X, Sparkles, Facebook } from 'lucide-react';
+import { Compass, ShieldCheck, Phone, MessageSquare, Menu, X, Sparkles, Facebook, Globe, Star } from 'lucide-react';
+import { Language, TRANSLATIONS } from '@/lib/translations';
 
 interface NavbarProps {
   currency: 'USD' | 'MXN';
   onCurrencyChange: (c: 'USD' | 'MXN') => void;
+  language: Language;
+  onLanguageChange: (l: Language) => void;
   onOpenBot?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOpenBot }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  currency, 
+  onCurrencyChange, 
+  language, 
+  onLanguageChange, 
+  onOpenBot 
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
+  const t = TRANSLATIONS[language].nav;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-gold-500/20 bg-navy-950/85">
@@ -43,20 +51,48 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-200">
-            <a href="#booking-engine" className="hover:text-gold-400 transition-colors">Cotizador</a>
-            <a href="#destinos" className="hover:text-gold-400 transition-colors">Destinos & Tours</a>
-            <a href="#tarifario" className="hover:text-gold-400 transition-colors">Tarifario Inteligente</a>
+          <div className="hidden xl:flex items-center space-x-6 text-sm font-medium text-gray-200">
+            <a href="#booking-engine" className="hover:text-gold-400 transition-colors">{t.quote}</a>
+            <a href="#destinos" className="hover:text-gold-400 transition-colors">{t.destinations}</a>
+            <a href="#tarifario" className="hover:text-gold-400 transition-colors">{t.pricing}</a>
             <a href="#garantia" className="hover:text-gold-400 transition-colors flex items-center gap-1">
               <ShieldCheck className="w-4 h-4 text-gold-400" />
-              Garantía de Precio
+              {t.guarantee}
             </a>
-            <a href="#identidad" className="hover:text-gold-400 transition-colors">Nosotros</a>
-            <a href="#faq" className="hover:text-gold-400 transition-colors">Terminales CUN & FAQ</a>
+            <a href="#resenas" className="hover:text-gold-400 transition-colors flex items-center gap-1">
+              <Star className="w-4 h-4 text-gold-400 fill-gold-400" />
+              {t.reviews}
+            </a>
+            <a href="#identidad" className="hover:text-gold-400 transition-colors">{t.about}</a>
+            <a href="#faq" className="hover:text-gold-400 transition-colors">{t.faq}</a>
           </div>
 
           {/* Right Action Bar */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
+            {/* Language Switcher (ES / EN) */}
+            <div className="flex items-center bg-navy-900 border border-gold-500/30 rounded-lg p-1 text-xs font-semibold">
+              <button
+                onClick={() => onLanguageChange('es')}
+                className={`px-2 py-1 rounded transition-colors ${
+                  language === 'es'
+                    ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 shadow font-bold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => onLanguageChange('en')}
+                className={`px-2 py-1 rounded transition-colors ${
+                  language === 'en'
+                    ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 shadow font-bold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
             {/* Currency Selector */}
             <div className="flex items-center bg-navy-900 border border-gold-500/30 rounded-lg p-1 text-xs font-semibold">
               <button
@@ -119,7 +155,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
           </div>
 
           {/* Mobile hamburger */}
-          <div className="flex items-center md:hidden gap-3">
+          <div className="flex items-center md:hidden gap-2">
+            <button
+              onClick={() => onLanguageChange(language === 'es' ? 'en' : 'es')}
+              className="text-xs px-2.5 py-1 rounded border border-gold-500/40 text-gold-400 bg-navy-900 font-bold"
+            >
+              {language.toUpperCase()}
+            </button>
             <button
               onClick={() => onCurrencyChange(currency === 'USD' ? 'MXN' : 'USD')}
               className="text-xs px-2.5 py-1 rounded border border-gold-500/40 text-gold-400 bg-navy-900"
@@ -144,42 +186,49 @@ export const Navbar: React.FC<NavbarProps> = ({ currency, onCurrencyChange, onOp
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Cotizador Rápido
+            {t.quote}
           </a>
           <a
             href="#destinos"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Destinos & Tours
+            {t.destinations}
           </a>
           <a
             href="#tarifario"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Tarifario Inteligente
+            {t.pricing}
           </a>
           <a
             href="#garantia"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Garantía de Mejor Precio
+            {t.guarantee}
+          </a>
+          <a
+            href="#resenas"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
+          >
+            {t.reviews}
           </a>
           <a
             href="#identidad"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Misión & Filosofía
+            {t.about}
           </a>
           <a
             href="#faq"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gold-400"
           >
-            Puntos de Encuentro CUN & FAQ
+            {t.faq}
           </a>
           <div className="pt-2 border-t border-gray-800 flex flex-col gap-2">
             <a

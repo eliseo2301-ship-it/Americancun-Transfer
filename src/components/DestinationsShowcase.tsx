@@ -5,13 +5,16 @@ import Image from 'next/image';
 import { Clock, MapPin, Sparkles, Check, ArrowRight } from 'lucide-react';
 import { DESTINATIONS_DATA } from '@/lib/destinations-data';
 import { formatPrice } from '@/lib/pricing';
+import { Language, TRANSLATIONS } from '@/lib/translations';
 
 interface DestinationsShowcaseProps {
   currency: 'USD' | 'MXN';
+  language: Language;
   onSelectDestination: (slug: string) => void;
 }
 
-export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ currency, onSelectDestination }) => {
+export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ currency, language, onSelectDestination }) => {
+  const t = TRANSLATIONS[language].destinations;
   const [activeTab, setActiveTab] = useState<'all' | 'quintana_roo' | 'yucatan' | 'parques'>('all');
 
   const filtered = DESTINATIONS_DATA.filter(item => {
@@ -28,13 +31,13 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Rutas y Excursiones Exclusivas</span>
+              <span>{t.badge}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white">
-              Destinos del Caribe Mexicano & <span className="gold-gradient-text">Yucatán</span>
+              {t.title} <span className="gold-gradient-text">{t.titleHighlight}</span>
             </h2>
             <p className="mt-2 text-gray-400 text-sm max-w-xl">
-              Flotilla de vanguardia con conductores certificados y monitoreo GPS 24/7 en todos los traslados y tours del sureste mexicano.
+              {t.subtitle}
             </p>
           </div>
 
@@ -48,7 +51,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                   : 'text-gray-300 hover:text-white'
               }`}
             >
-              Todos (15)
+              {t.filterAll} (15)
             </button>
             <button
               onClick={() => setActiveTab('quintana_roo')}
@@ -58,7 +61,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                   : 'text-gray-300 hover:text-white'
               }`}
             >
-              Quintana Roo (7)
+              {t.filterQr} (7)
             </button>
             <button
               onClick={() => setActiveTab('yucatan')}
@@ -68,7 +71,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                   : 'text-gray-300 hover:text-white'
               }`}
             >
-              Yucatán & Cultura (5)
+              {t.filterYuc} (5)
             </button>
             <button
               onClick={() => setActiveTab('parques')}
@@ -78,7 +81,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                   : 'text-gray-300 hover:text-white'
               }`}
             >
-              Parques & Aventura (3)
+              {t.filterParks} (3)
             </button>
           </div>
         </div>
@@ -162,7 +165,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                   {/* Pricing footer */}
                   <div className="mt-6 pt-4 border-t border-navy-800/80 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-gray-400 block">Van Privada (hasta 8 pax)</span>
+                      <span className="text-[10px] uppercase tracking-wider text-gray-400 block">{t.fromGroupVan}</span>
                       <span className="text-lg font-bold text-gold-400">
                         {groupVanRate}
                       </span>
@@ -173,7 +176,7 @@ export const DestinationsShowcase: React.FC<DestinationsShowcaseProps> = ({ curr
                       onClick={() => onSelectDestination(item.slug)}
                       className="px-3.5 py-2 rounded-xl bg-navy-800 hover:bg-gold-500 text-gold-400 hover:text-navy-950 font-semibold text-xs border border-gold-500/30 transition-all flex items-center gap-1 group/btn"
                     >
-                      <span>Cotizar</span>
+                      <span>{t.quoteBtn}</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
                     </button>
                   </div>

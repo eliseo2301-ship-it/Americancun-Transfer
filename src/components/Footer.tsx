@@ -4,8 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Compass, ShieldCheck, Phone, Mail, MapPin, MessageSquare, CreditCard, Clock, Facebook } from 'lucide-react';
+import { Language } from '@/lib/translations';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  language?: Language;
+}
+
+export const Footer: React.FC<FooterProps> = ({ language = 'es' }) => {
   const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP || '+52 998 768 7600';
 
   return (
@@ -32,17 +37,19 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-gray-400 leading-relaxed text-xs max-w-sm">
-              Plataforma digital premium de traslados turísticos privados y grupales en Cancún, Riviera Maya y Yucatán. Cotizaciones instantáneas, tarifas más competitivas del mercado, checkout automatizado con SPEI / Efectivo y recordatorios vía WhatsApp con 60 minutos de anticipación.
+              {language === 'en'
+                ? 'Premium digital platform for private and group tourist transfers in Cancun, Riviera Maya, and Yucatan. Instant quotes, market-leading rates, automated SPEI / Cash on Arrival checkout, and 60-minute WhatsApp pre-departure alerts.'
+                : 'Plataforma digital premium de traslados turísticos privados y grupales en Cancún, Riviera Maya y Yucatán. Cotizaciones instantáneas, tarifas más competitivas del mercado, checkout automatizado con SPEI / Efectivo y recordatorios vía WhatsApp con 60 minutos de anticipación.'}
             </p>
 
             <div className="flex items-center gap-3 pt-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold text-[11px]">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                Empresa 100% Regulada SCT
+                {language === 'en' ? '100% SCT Regulated Fleet' : 'Empresa 100% Regulada SCT'}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20 font-semibold text-[11px]">
                 <Clock className="w-3.5 h-3.5" />
-                Puntualidad 100%
+                {language === 'en' ? '100% Punctuality' : 'Puntualidad 100%'}
               </span>
             </div>
 
@@ -54,14 +61,16 @@ export const Footer: React.FC = () => {
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 text-xs font-semibold transition-all shadow"
               >
                 <Facebook className="w-3.5 h-3.5" />
-                <span>Síguenos en Facebook Oficial</span>
+                <span>{language === 'en' ? 'Follow on Official Facebook' : 'Síguenos en Facebook Oficial'}</span>
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Destinos Top</h4>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+              {language === 'en' ? 'Top Destinations' : 'Destinos Top'}
+            </h4>
             <ul className="space-y-2">
               <li><a href="#destinos" className="hover:text-gold-400 transition-colors">Cancún Zona Hotelera</a></li>
               <li><a href="#destinos" className="hover:text-gold-400 transition-colors">Playa del Carmen</a></li>
@@ -74,20 +83,24 @@ export const Footer: React.FC = () => {
 
           {/* Logistics & Legal */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Logística & Ayuda</h4>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+              {language === 'en' ? 'Logistics & Help' : 'Logística & Ayuda'}
+            </h4>
             <ul className="space-y-2">
               <li><a href="#faq" className="hover:text-gold-400 transition-colors">Terminal 2 - CUN</a></li>
               <li><a href="#faq" className="hover:text-gold-400 transition-colors">Terminal 3 - CUN</a></li>
               <li><a href="#faq" className="hover:text-gold-400 transition-colors">Terminal 4 - CUN</a></li>
-              <li><a href="#tarifario" className="hover:text-gold-400 transition-colors">Tarifario Inteligente</a></li>
-              <li><a href="#garantia" className="hover:text-gold-400 transition-colors">Garantía de Mejor Precio</a></li>
-              <li><a href="#faq" className="hover:text-gold-400 transition-colors">Políticas de Equipaje</a></li>
+              <li><a href="#tarifario" className="hover:text-gold-400 transition-colors">{language === 'en' ? 'Smart Pricing' : 'Tarifario Inteligente'}</a></li>
+              <li><a href="#garantia" className="hover:text-gold-400 transition-colors">{language === 'en' ? 'Best Price Guarantee' : 'Garantía de Mejor Precio'}</a></li>
+              <li><a href="#faq" className="hover:text-gold-400 transition-colors">{language === 'en' ? 'Luggage Policies' : 'Políticas de Equipaje'}</a></li>
             </ul>
           </div>
 
           {/* Contact Direct */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Atención Inmediata</h4>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+              {language === 'en' ? 'Immediate Concierge' : 'Atención Inmediata'}
+            </h4>
             <div className="space-y-2 text-xs">
               <a
                 href={`https://wa.me/${supportPhone.replace(/[^0-9]/g, '')}`}
@@ -125,13 +138,13 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-navy-900 flex flex-col sm:flex-row items-center justify-between text-gray-500 gap-4">
-          <p>© {new Date().getFullYear()} Americancun Transfer. Todos los derechos reservados. Operado bajo normativa federal de turismo.</p>
+          <p>© {new Date().getFullYear()} Americancun Transfer. {language === 'en' ? 'All rights reserved. Operated under Mexican federal tourism regulations.' : 'Todos los derechos reservados. Operado bajo normativa federal de turismo.'}</p>
           <div className="flex gap-4">
-            <span className="hover:text-gray-400 cursor-pointer">Términos del Servicio</span>
+            <span className="hover:text-gray-400 cursor-pointer">{language === 'en' ? 'Terms of Service' : 'Términos del Servicio'}</span>
             <span>•</span>
-            <span className="hover:text-gray-400 cursor-pointer">Aviso de Privacidad</span>
+            <span className="hover:text-gray-400 cursor-pointer">{language === 'en' ? 'Privacy Notice' : 'Aviso de Privacidad'}</span>
             <span>•</span>
-            <span className="hover:text-gray-400 cursor-pointer">Seguridad de Pago SPEI</span>
+            <span className="hover:text-gray-400 cursor-pointer">{language === 'en' ? 'SPEI Payment Security' : 'Seguridad de Pago SPEI'}</span>
           </div>
         </div>
 

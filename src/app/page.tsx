@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { HeroBookingEngine } from '@/components/HeroBookingEngine';
 import { DestinationsShowcase } from '@/components/DestinationsShowcase';
 import { PricingTiers } from '@/components/PricingTiers';
+import { ReviewsSection } from '@/components/ReviewsSection';
 import { CorporateIdentity } from '@/components/CorporateIdentity';
 import { FaqSection } from '@/components/FaqSection';
 import { Footer } from '@/components/Footer';
@@ -12,9 +13,11 @@ import { CheckoutModal } from '@/components/CheckoutModal';
 import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { calculateQuote } from '@/lib/pricing';
 import { VehicleCategory } from '@/types';
+import { Language } from '@/lib/translations';
 
 export default function HomePage() {
   const [currency, setCurrency] = useState<'USD' | 'MXN'>('USD');
+  const [language, setLanguage] = useState<Language>('es');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
   const [activeBookingDetails, setActiveBookingDetails] = useState<any>(null);
@@ -82,35 +85,51 @@ export default function HomePage() {
       <Navbar
         currency={currency}
         onCurrencyChange={setCurrency}
+        language={language}
+        onLanguageChange={setLanguage}
         onOpenBot={() => setIsBotOpen(true)}
       />
 
       {/* 1. Hero Booking Engine */}
       <HeroBookingEngine
         currency={currency}
+        language={language}
         onBookNow={handleOpenBooking}
       />
 
       {/* 2. Top Destinations & Tours Showcase */}
       <DestinationsShowcase
         currency={currency}
+        language={language}
         onSelectDestination={handleSelectDestinationFromCatalog}
       />
 
       {/* 3. Tarifario Inteligente */}
       <PricingTiers
         currency={currency}
+        language={language}
         onChooseTier={handleChooseTier}
       />
 
-      {/* 4. Identidad Corporativa: Misión, Visión, Filosofía */}
-      <CorporateIdentity />
+      {/* 4. Reseñas y Comentarios de Clientes Satisfechos */}
+      <ReviewsSection
+        language={language}
+      />
 
-      {/* 5. Centro de Ayuda, Puntos de Encuentro CUN y FAQ */}
-      <FaqSection />
+      {/* 5. Identidad Corporativa: Misión, Visión, Filosofía */}
+      <CorporateIdentity
+        language={language}
+      />
+
+      {/* 6. Centro de Ayuda, Puntos de Encuentro CUN y FAQ */}
+      <FaqSection
+        language={language}
+      />
 
       {/* Footer */}
-      <Footer />
+      <Footer
+        language={language}
+      />
 
       {/* Automated Checkout Modal */}
       <CheckoutModal
